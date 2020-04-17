@@ -1,6 +1,6 @@
-package EmployeeService;
+package employeeService;
 
-import PositionService.Position;
+import positionService.Position;
 
 import java.util.Objects;
 
@@ -66,10 +66,6 @@ public class Employee {
 
     @Override
     public String toString() {
-        return "Employee{" +
-                "name='" + name + '\'' +
-                ", age=" + age +
-                ", position=" + position +
-                '}';
+        return "Employee{" + "name='" + name + '\'' + ", age=" + age + ", position=" + position + '}';
     }
 }

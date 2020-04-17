@@ -1,6 +1,6 @@
-package PositionService;
+package positionService;
 
-import EmployeeService.Employee;
+import employeeService.Employee;
 import org.junit.Test;
 
 import java.util.ArrayList;

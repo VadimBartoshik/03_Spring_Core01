@@ -1,0 +1,324 @@
+1). Configure the beans over XML:
+
+code in Beans.xml file;
+
+    <bean id="worker" class="positionService.Position">
+        <constructor-arg name="positionName" value="worker"/>
+        <constructor-arg name="salary" value="700"/>
+        <constructor-arg name="countPlace" value="3"/>
+    </bean>
+
+    <bean id="director" class="positionService.Position">
+        <property name="positionName" value="director"/>
+        <property name="salary" value="1000"/>
+        <property name="countPlace" value="1"/>
+    </bean>
+
+    <bean id="secretary" class="positionService.Position">
+        <constructor-arg name="positionName" value="secretary"/>
+        <constructor-arg name="salary" value="500"/>
+        <constructor-arg name="countPlace" value="2"/>
+    </bean>
+
+    <bean id="vadim" class="employeeService.Employee">
+        <constructor-arg name="name" value="Vadim"/>
+        <constructor-arg name="age" value="18"/>
+        <constructor-arg name="position" ref="worker"/>
+    </bean>
+
+    <bean id="ivan" class="employeeService.Employee">
+        <constructor-arg name="name" value="Ivan"/>
+        <constructor-arg name="age" value="19"/>
+        <constructor-arg name="position" ref="director"/>
+    </bean>
+
+    <bean id="marina" class="employeeService.Employee">
+        <constructor-arg name="name" value="Ivan"/>
+        <constructor-arg name="age" value="19"/>
+        <constructor-arg name="position" ref="worker"/>
+    </bean>
+
+    <bean id="dasha" class="employeeService.Employee">
+        <constructor-arg name="name" value="Dasha"/>
+        <constructor-arg name="age" value="20"/>
+        <constructor-arg name="position" ref="secretary"/>
+    </bean>
+
+    <bean id="anna" class="employeeService.Employee">
+        <constructor-arg name="name" value="Anna"/>
+        <constructor-arg name="age" value="20"/>
+        <property name="position" ref="secretary"/>
+    </bean>
+
+    <bean id="alex" class="employeeService.Employee">
+        <constructor-arg name="name" value="Alex"/>
+        <constructor-arg name="age" value="25"/>
+        <constructor-arg name="position" ref="director"/>
+    </bean>
+
+ Runner code:
+*************************************************************************************
+*                                                                                   *
+*   ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");   *
+*                                                                                   *
+*         Position worker = (Position) context.getBean("worker");                   *
+*         Position director = (Position) context.getBean("director");               *
+*         Position secretary= (Position)context.getBean("secretary");               *
+*                                                                                   *
+*         Employee vadim = (Employee) context.getBean("vadim");                     *
+*         Employee ivan = (Employee) context.getBean("ivan");                       *
+*         Employee marina = (Employee) context.getBean("marina");                   *
+*         Employee dasha = (Employee) context.getBean("dasha");                     *
+*         Employee anna = (Employee) context.getBean("anna");                       *
+*         Employee alex = (Employee) context.getBean("alex");                       *
+*                                                                                   *
+*         System.out.println(worker.toString());                                    *
+*         System.out.println(director.toString());                                  *
+*         System.out.println(secretary.toString());                                 *
+*                                                                                   *
+*         System.out.println(vadim.toString());                                     *
+*         System.out.println(ivan.toString());                                      *
+*         System.out.println(marina.toString());                                    *
+*         System.out.println(dasha.toString());                                     *
+*         System.out.println(anna.toString());                                      *
+*         System.out.println(alex.toString());                                      *
+*                                                                                   *
+*************************************************************************************
+
+result in Console:
+ |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+ |                                                                                                         |
+ |   Position{positionName='worker', salary=700, countPlace=3}                                             |
+ |   Position{positionName='director', salary=1000, countPlace=1}                                          |
+ |   Position{positionName='secretary', salary=500, countPlace=2}                                          |
+ |                                                                                                         |
+ |   Employee{name='Vadim', age=18, position=Position{positionName='Работник', salary=700, countPlace=3}}  |
+ |   Employee{name='Ivan', age=19, position=Position{positionName='Работник', salary=700, countPlace=3}}   |
+ |   Employee{name='Ivan', age=19, position=Position{positionName='Работник', salary=700, countPlace=3}}   |
+ |   Employee{name='Dasha', age=20, position=Position{positionName='Секретарь', salary=500, countPlace=2}} |
+ |   Employee{name='Anna', age=20, position=Position{positionName='Секретарь', salary=500, countPlace=2}}  |
+ |   Employee{name='Alex', age=25, position=Position{positionName='Директор', salary=1000, countPlace=1}}  |
+ |                                                                                                         |
+ |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+
+2). Implement 3 services using different types of auto wiring.
+
+                    ***auto wire by Name***
+
+code in Beans.xml file:
+
+    <bean id="alex" class="employeeService.Employee" autowire="byName">
+        <constructor-arg name="name" value="Alex"/>
+        <constructor-arg name="age" value="25"/>
+    </bean>
+
+     <bean id="position" class="positionService.Position">
+         <constructor-arg name="positionName" value="director"/>
+         <constructor-arg name="salary" value="1000"/>
+         <constructor-arg name="countPlace" value="1"/>
+     </bean>
+
+
+Runner code:
+*************************************************************************************
+*                                                                                   *
+*   ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");   *
+*                                                                                   *
+*       Position director = (Position) context.getBean("director");                 *
+*       Employee alex = (Employee) context.getBean("alex");                         *
+*       System.out.println(alex.toString());                                        *
+*                                                                                   *
+*************************************************************************************
+
+result in Console:
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|                                                                                                         |
+|    Employee{name='Alex', age=25, position=Position{positionName='director', salary=1000, countPlace=1}} |
+|                                                                                                         |
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+                      ***auto wire by Type***
+
+code in Beans.xml file:
+
+ <bean id="secretary" class="positionService.Position">
+        <constructor-arg name="positionName" value="secretary"/>
+        <constructor-arg name="salary" value="500"/>
+        <constructor-arg name="countPlace" value="2"/>
+    </bean>
+
+     <bean id="alex" class="employeeService.Employee" autowire="byType">
+            <constructor-arg name="name" value="Alex"/>
+            <constructor-arg name="age" value="25"/>
+        </bean>
+
+Runner code:
+*************************************************************************************
+*                                                                                   *
+*   ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");   *
+*                                                                                   *
+*       Position secretary= (Position)context.getBean("secretary");                 *
+*       Employee alex = (Employee) context.getBean("alex");                         *
+*       System.out.println(alex.toString());                                        *
+*                                                                                   *
+*************************************************************************************
+
+result in Console:
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|                                                                                                         |
+|    Employee{name='Alex', age=25, position=Position{positionName='secretary', salary=500, countPlace=2}} |
+|                                                                                                         |
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+                  ***auto wire by constructor***
+
+code in Beans.xml file:
+
+   <bean id="secretary" class="positionService.Position">
+        <constructor-arg name="positionName" value="secretary"/>
+        <constructor-arg name="salary" value="500"/>
+        <constructor-arg name="countPlace" value="2"/>
+   </bean>
+
+   <bean id="dasha" class="employeeService.Employee" autowire="constructor">
+            <constructor-arg name="name" value="Dasha"/>
+            <constructor-arg name="age" value="20"/>
+   </bean>
+
+Runner code:
+*************************************************************************************
+*                                                                                   *
+*   ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");   *
+*                                                                                   *
+*       Position secretary= (Position)context.getBean("secretary");                 *
+*       Employee dasha = (Employee) context.getBean("dasha");                       *
+*       System.out.println(dasha.toString());                                       *
+*                                                                                   *
+*                                                                                   *
+*************************************************************************************
+
+result in Console:
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|                                                                                                         |
+|  Employee{name='Dasha', age=20, position=Position{positionName='secretary', salary=500, countPlace=2}}  |
+|                                                                                                         |
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+3). Pass bean references, string constants and primitive types as constructor parameters
+
+code in Beans.xml file:
+
+ <bean id="worker" class="positionService.Position">
+     <constructor-arg name="positionName" value="worker"/>
+     <constructor-arg name="salary" value="700"/>
+     <constructor-arg name="countPlace" value="3"/>
+ </bean>
+
+ <bean id="vadim" class="employeeService.Employee">
+     <constructor-arg name="name" value="Vadim"/>
+     <constructor-arg name="age" value="18"/>
+     <constructor-arg name="position" ref="worker"/>
+ </bean>
+
+
+Runner code:
+*************************************************************************************
+*                                                                                   *
+*   ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");   *
+*                                                                                   *
+*       Position worker = (Position) context.getBean("worker");                     *
+*       Employee vadim = (Employee) context.getBean("vadim");                       *
+*       System.out.println(vadim.toString());                                       *
+*                                                                                   *
+*                                                                                   *
+*************************************************************************************
+
+result in Console:
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|                                                                                                         |
+|   Employee{name='Vadim', age=18, position=Position{positionName='worker', salary=700, countPlace=3}}    |
+|                                                                                                         |
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+4). Use setter approach for passing another bean parameter
+
+code in Beans.xml file:
+
+ <bean id="director" class="positionService.Position">
+     <property name="positionName" value="director"/>
+     <property name="salary" value="1000"/>
+     <property name="countPlace" value="1"/>
+ </bean>
+
+ <bean id="alex" class="employeeService.Employee">
+     <property name="name" value="Alex"/>
+     <property name="age" value="25"/>
+     <property name="position" ref="director"/>
+ </bean>
+
+Runner code:
+*************************************************************************************
+*                                                                                   *
+*   ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");   *
+*                                                                                   *
+*       Position director = (Position) context.getBean("director");                 *
+*       Employee alex = (Employee) context.getBean("alex");                         *
+*       System.out.println(alex.toString());                                        *
+*                                                                                   *
+*                                                                                   *
+*************************************************************************************
+
+result in Console:
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+|                                                                                                         |
+|    Employee{name='Alex', age=25, position=Position{positionName='secretary', salary=500, countPlace=2}} |
+|                                                                                                         |
+|||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+
+
+7). Provide tests for invalid data
+
+
+@org.junit.Test
+    public void isNullPosition() {
+        Position director = new Position("директор", 1000, 1, new ArrayList<Employee>());
+        Employee vadim = new Employee("Вадим", 18);
+        boolean actual=director.isNullPosition(vadim);
+        boolean expected= false;
+        assertEquals(expected,actual);
+    }
+
+
+    @Test
+    public void fireEmployee() {
+        Position worker = new Position("работник", 700, 3, new ArrayList<Employee>());
+        Employee vadim = new Employee("Вадим", 18);
+        Employee ivan = new Employee("Иван", 18, worker);
+        Employee marina = new Employee("Марина", 18, worker);
+        List<Employee> actualList=worker.getEmployeeList();
+        worker.fireEmployee(ivan);
+        List<Employee> expectedList= Arrays.asList(marina);
+        assertEquals(expectedList,actualList);
+    }
+
+
+
+    @Test
+    public void hireEmployee() {
+        Position worker = new Position("работник", 700, 3, new ArrayList<Employee>());
+        Employee vadim = new Employee("Вадим", 18);
+        Employee ivan = new Employee("Иван", 18, worker);
+        worker.hireEmployee(vadim);
+        List<Employee> actualList=worker.getEmployeeList();
+        List<Employee> expectedList= Arrays.asList(ivan,vadim);
+        assertEquals(expectedList,actualList);
+    }
+
+    result: all tests passed
+

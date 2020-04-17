@@ -1,7 +1,6 @@
-package PositionService;
+package positionService;
 
-import EmployeeService.Employee;
-import SalaryService.Salary;
+import employeeService.Employee;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,10 +139,8 @@ public class Position {
     @Override
     public String toString() {
         return "Position{" +
-                "positionName='" + positionName + '\'' +
-                ", salary=" + salary +
-                ", countPlace=" + countPlace +
-                ", employeeList=" + employeeList +
-                '}';
+                "positionName='" + getPositionName() + '\'' +
+                ", salary=" + getSalary() +
+                ", countPlace=" + getCountPlace() + '}';
     }
 }

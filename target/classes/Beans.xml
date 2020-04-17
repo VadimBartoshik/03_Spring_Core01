@@ -2,20 +2,73 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
            http://www.springframework.org/schema/context
            http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 
-    <bean id="list" class="util.List"/>
+    <bean id="worker" class="positionService.Position">
+        <constructor-arg name="positionName" value="worker"/>
+        <constructor-arg name="salary" value="700"/>
+        <constructor-arg name="countPlace" value="3"/>
+    </bean>
+
+    <bean id="director" class="positionService.Position">
+        <property name="positionName" value="director"/>
+        <property name="salary" value="1000"/>
+        <property name="countPlace" value="1"/>
+    </bean>
+
+    <!--<bean id="position" class="positionService.Position">-->
+    <!--<constructor-arg name="positionName" value="director"/>-->
+    <!--<constructor-arg name="salary" value="1000"/>-->
+    <!--<constructor-arg name="countPlace" value="1"/>-->
+    <!--</bean>-->
+
+    <bean id="secretary" class="positionService.Position">
+        <constructor-arg name="positionName" value="secretary"/>
+        <constructor-arg name="salary" value="500"/>
+        <constructor-arg name="countPlace" value="2"/>
+    </bean>
 
 
-  <bean id="worker" class="PositionService.Position">
-      <constructor-arg name="positionName" value="Работник"/>
-      <constructor-arg name="salary" value="700"/>
-      <constructor-arg name="countPlace" value="3"/>
-      <constructor-arg name="employeeList" ref="list"/>
-  </bean>
+    <bean id="vadim" class="employeeService.Employee">
+        <constructor-arg name="name" value="Vadim"/>
+        <constructor-arg name="age" value="18"/>
+        <constructor-arg name="position" ref="worker"/>
+    </bean>
+
+    <bean id="ivan" class="employeeService.Employee">
+        <constructor-arg name="name" value="Ivan"/>
+        <constructor-arg name="age" value="19"/>
+        <constructor-arg name="position" ref="director"/>
+    </bean>
+
+    <bean id="marina" class="employeeService.Employee">
+        <constructor-arg name="name" value="Ivan"/>
+        <constructor-arg name="age" value="19"/>
+        <constructor-arg name="position" ref="worker"/>
+    </bean>
+
+    <bean id="dasha" class="employeeService.Employee">
+        <constructor-arg name="name" value="Dasha"/>
+        <constructor-arg name="age" value="20"/>
+        <constructor-arg name="position" ref="secretary"/>
+    </bean>
+
+    <bean id="anna" class="employeeService.Employee">
+        <constructor-arg name="name" value="Anna"/>
+        <constructor-arg name="age" value="20"/>
+        <property name="position" ref="secretary"/>
+    </bean>
+
+    <bean id="alex" class="employeeService.Employee">
+        <property name="name" value="Alex"/>
+        <property name="age" value="25"/>
+        <property name="position" ref="director"/>
+    </bean>
+
 
 </beans>
