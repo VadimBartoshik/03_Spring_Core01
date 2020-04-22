@@ -21,11 +21,6 @@
         <property name="countPlace" value="1"/>
     </bean>
 
-    <!--<bean id="position" class="positionService.Position">-->
-    <!--<constructor-arg name="positionName" value="director"/>-->
-    <!--<constructor-arg name="salary" value="1000"/>-->
-    <!--<constructor-arg name="countPlace" value="1"/>-->
-    <!--</bean>-->
 
     <bean id="secretary" class="positionService.Position">
         <constructor-arg name="positionName" value="secretary"/>
@@ -43,7 +38,7 @@
     <bean id="ivan" class="employeeService.Employee">
         <constructor-arg name="name" value="Ivan"/>
         <constructor-arg name="age" value="19"/>
-        <constructor-arg name="position" ref="director"/>
+        <constructor-arg name="position" ref="worker"/>
     </bean>
 
     <bean id="marina" class="employeeService.Employee">

@@ -32,8 +32,7 @@ public class Position {
     public void fireEmployee(Employee employee) {
         if (findEmployee(employee)) {
             employeeList.remove(employee);
-        } else
-            System.out.println("Такого сотрудника нет на данной должности");
+        }
     }
 
     public void hireEmployee(Employee employee) {
@@ -42,13 +41,10 @@ public class Position {
                employee.getPosition().fireEmployee(employee);
                employeeList.add(employee);
                employee.setPosition(this);
-
-        } else
-            System.out.println(employee.getName() + " не может занять должноть - " + this.getPositionName());
+        }
     }
 
     public void printEmployeeList() {
-        System.out.println("Список " + this.getPositionName()+"ов :");
         for (Employee employee : employeeList) {
             System.out.println(employee.getName());
         }
